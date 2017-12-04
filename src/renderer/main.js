@@ -6,7 +6,8 @@ import router from './router'
 import store from './store'
 
 Vue.component('section-title', require('./components/pageparts/section-title.vue').default);
-Vue.component('content', require('./components/pageparts/section-content').default);
+Vue.component('section-content', require('./components/pageparts/section-content').default);
+
 
 if (!process.env.IS_WEB) Vue.use(require('vue-electron'))
 Vue.http = Vue.prototype.$http = axios

@@ -11,6 +11,7 @@ export default new Router({
       component: require('@/components/home').default
     },
       {path: '/docs/sections/', component: require('@/components/docs/sections/').default, name: 'docs-sections'},
+      {path: '/docs/sections/:id', component: require('@/components/docs/sections/items').default, name: 'docs-sections-items'},
       {path: '/docs/pages/add/', component: require('@/components/docs/pages/add/').default, name: 'docs-pages-add'},
     {
       path: '*',

@@ -2,11 +2,16 @@
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top">
         <!-- Sidebar toggle button-->
-        <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
+        <a href="#" role="button" class="navbar-action" @click="reload();">
+            <i class="fa fa-refresh"></i>
+        </a>
+
+        <a href="#" role="button" class="navbar-action" @click="back();">
+            <i class="fa fa-angle-left"></i>
+        </a>
+
+        <a href="#" role="button" class="navbar-action" @click="forward()">
+            <i class="fa fa-angle-right"></i>
         </a>
 
         <div class="navbar-custom-menu">
@@ -147,10 +152,34 @@
 
 <script>
 	export default {
-        name: 'page-part-nav-bar'
+        name: 'page-part-nav-bar',
+		methods: {
+			reload() {
+                //this.$route.
+			},
+
+            back() {
+				this.$router.go(-1);
+            },
+
+            forward() {
+				this.$router.go(1);
+            }
+		},
 	}
 </script>
 
 <style scoped>
-
+    .navbar-action {
+        color:#fff;
+        font-size:22px;
+        margin:0 5px;
+        font-weight: 100;
+        line-height: 50px;
+        display:inline-block;
+        width:50px;
+    }
+    .navbar-action:first-child {
+        margin-left:20px;
+    }
 </style>
