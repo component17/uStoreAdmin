@@ -1,6 +1,6 @@
 {
   "name": "uPointStoreAdminPanel",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": "Stas <mail@k1on.ru>",
   "description": "Administrator app for upoint.store",
   "license": null,
@@ -54,6 +54,8 @@
     "@deveodk/vue-toastr": "^1.0.4",
     "axios": "^0.16.1",
     "codemirror": "^5.32.0",
+    "electron-is-dev": "^0.3.0",
+    "electron-squirrel-startup": "^1.0.0",
     "firebase": "^4.7.0",
     "firebase-admin": "^5.5.1",
     "firebaseui": "^2.5.1",
