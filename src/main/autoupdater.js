@@ -1,10 +1,11 @@
 'use strict';
 const os = require('os');
 const {app, autoUpdater, dialog} = require('electron');
-const version = app.getVersion();
+const version = '1.0.0';
 const platform = os.platform() + '_' + os.arch();  // usually returns darwin_64
 
 const updaterFeedURL = 'https://ustoreadmin.herokuapp.com/update/' + platform + '/' + version;
+//console.log(updaterFeedURL);
 // replace updaterFeedURL with http://yourappname.herokuapp.com
 
 function appUpdater() {
