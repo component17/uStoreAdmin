@@ -13,13 +13,13 @@ if (process.env.NODE_ENV !== 'development') {
 }
 
 
-/*if (require('electron-squirrel-startup')) {
+if (require('electron-squirrel-startup')) {
 	app.quit();
 }
 
 function isWindowsOrmacOS() {
 	return process.platform === 'darwin' || process.platform === 'win32';
-}*/
+}
 
 
 let mainWindow
@@ -38,9 +38,9 @@ function createWindow () {
   })
 
   mainWindow.loadURL(winURL);
-	appUpdater();
+	//appUpdater();
 	
-	/*const page = mainWindow.webContents;
+	const page = mainWindow.webContents;
 	
 	page.once('did-frame-finish-load', () => {
 		const checkOS = isWindowsOrmacOS();
@@ -48,7 +48,7 @@ function createWindow () {
 			// Initate auto-updates on macOs and windows
 			appUpdater();
 		}
-	});*/
+	});
 	
 
   mainWindow.on('closed', () => {
