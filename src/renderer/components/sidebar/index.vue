@@ -3,20 +3,11 @@
         <!-- sidebar: style can be found in sidebar.less -->
         <section class="sidebar">
             <!-- Sidebar user panel -->
-            <div class="user-panel">
-                <div class="pull-left image">
-                    <img src="static/img/user2-160x160.jpg" class="img-circle" alt="User Image">
-                </div>
-                <div class="pull-left info">
-                    <p>Alexander Pierce</p>
-                    <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
-                </div>
-            </div>
 
             <!-- sidebar menu: : style can be found in sidebar.less -->
             <ul class="sidebar-menu" data-widget="tree">
                 <li class="header">MAIN NAVIGATION</li>
-                <li class="treeview" :class="{'menu-open': menuID === 1}" >
+                <li class="treeview" :class="{'menu-open': menuID === 1, active: menuID === 1}" >
                     <a @click="menuOpen(1);">
                         <i class="fa fa-dashboard"></i> <span>Документация</span>
                         <span class="pull-right-container">
@@ -24,8 +15,30 @@
                         </span>
                     </a>
                     <ul class="treeview-menu" :class="{open: menuID === 1}">
-                        <li><a @click="push('/docs/sections/');"><i class="fa fa-circle-o"></i> Разделы</a></li>
-                        <li><a @click="$router.push('/docs/pages/add/');"><i class="fa fa-circle-o"></i> Добавить страницу</a></li>
+                        <li><a @click="push('/docs/sections/')"><i class="fa fa-circle-o"></i> Управление</a></li>
+                        <li>
+                            <a @click="expandMenu = !expandMenu"><i class="fa fa-circle-o"></i> <span>Просмотр</span>
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu" :class="{open: expandMenu}">
+                                <li class="treeview" v-for="section in sections">
+                                    <a href="#"><i class="fa fa-angle-double-right"></i> {{section.name}}
+                                    </a>
+                                    <ul class="treeview-menu open">
+                                        <li class="treeview" v-for="category in section.categories">
+                                            <a href="#"><i class="fa fa-angle-right"></i> {{category.name}}
+                                            </a>
+                                            <ul class="treeview-menu open" v-for="page in category.pages">
+                                                <li><a href="#" @click="push(`/docs/read/${section.id}/${category.id}/${page.id}/`)"><i class="fa fa-file-text"></i> {{page.name}}</a></li>
+
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
                     </ul>
                 </li>
 
@@ -40,11 +53,37 @@
         name: 'page-part-sidebar',
 		data() {
 			return {
-				menuID: false
+				menuID: false,
+                expandMenu: false,
+                sections: [],
 			}
 		},
+
+
+        created() {
+            new Promise((resolve, reject) => {
+                this.$db.table("docSection").changes((sections) => {
+                    sections.forEach((section, sIndex) => {
+                        this.$db.table("docCategory").filter({parentId: section.id}).changes((categories) => {
+                            sections[sIndex].categories = categories;
+                            categories.forEach((category, cIndex) => {
+                                this.$db.table("docPage").filter({categoryId: category.id}).changes((pages) => {
+                                    sections[sIndex].categories[cIndex].pages = pages;
+                                    resolve(sections);
+                                })
+                            })
+                        })
+                    })
+                })
+
+            }).then((sections) => {
+                this.sections = sections;
+            });
+        },
+
 		methods: {
 			menuOpen(id) {
+				this.expandMenu = false;
 				if(this.menuID === id) {
 					this.menuID = false;
 					return;
@@ -53,7 +92,6 @@
 			},
 
             push(route) {
-				console.log(route);
 				this.$router.push(route);
             }
 		},

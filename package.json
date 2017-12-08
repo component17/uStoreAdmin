@@ -1,8 +1,8 @@
 {
-  "name": "admin",
-  "version": "0.0.0",
+  "name": "uPointStoreAdminPanel",
+  "version": "1.0.0",
   "author": "Stas <mail@k1on.ru>",
-  "description": "An electron-vue project",
+  "description": "Administrator app for upoint.store",
   "license": null,
   "main": "./dist/electron/main.js",
   "scripts": {
@@ -17,8 +17,8 @@
     "postinstall": ""
   },
   "build": {
-    "productName": "admin",
-    "appId": "org.simulatedgreg.electron-vue",
+    "productName": "upoint.sotre Admin App",
+    "appId": "org.component17.ustore.admin",
     "directories": {
       "output": "build"
     },
@@ -44,17 +44,34 @@
       "icon": "build/icons/icon.icns"
     },
     "win": {
-      "icon": "build/icons/icon.ico"
+      "icon": "build/icons/admin-icon-2.ico"
     },
     "linux": {
       "icon": "build/icons"
     }
   },
   "dependencies": {
-    "vue": "^2.3.3",
+    "@deveodk/vue-toastr": "^1.0.4",
     "axios": "^0.16.1",
+    "codemirror": "^5.32.0",
+    "firebase": "^4.7.0",
+    "firebase-admin": "^5.5.1",
+    "firebaseui": "^2.5.1",
+    "highlight.js": "^9.12.0",
+    "highlightjs": "^9.10.0",
+    "lodash": "^4.17.4",
+    "markdown-it-editor": "^1.1.4",
+    "marked": "^0.3.7",
+    "rethinkdb": "^2.3.3",
+    "socket.io": "^2.0.4",
+    "socket.io-client": "^2.0.4",
+    "toastr": "^2.1.2",
+    "vue": "^2.3.3",
+    "vue-codemirror": "^3.1.8",
     "vue-electron": "^1.0.6",
     "vue-router": "^2.5.3",
+    "vue-toastr": "^2.0.11",
+    "vue-toastr-2": "0.0.9",
     "vuex": "^2.3.1"
   },
   "devDependencies": {

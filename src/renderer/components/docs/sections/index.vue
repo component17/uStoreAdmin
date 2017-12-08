@@ -1,25 +1,33 @@
 <template>
     <div>
-        <section-title>Разделы документации</section-title>
         <section-content>
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <div class="box">
-                        <table class="table  table-hover" style="width:100%;">
-                            <tr>
-                                <th>Раздел</th>
-                                <th style="width:80px;">Действия</th>
-                            </tr>
-                            <tr>
-                                <td @click="$router.push('/docs/sections/1');">Быстрый старт</td>
-                                <td>
-                                    <div class="btn-group">
-                                        <button type="button" class="btn btn-info"><i class="fa fa-edit"></i></button>
-                                        <button type="button" class="btn btn-danger"><i class="fa fa-remove"></i></button>
-                                    </div>
-                                </td>
-                            </tr>
-                        </table>
+                        <div class="box-header">
+                            <h3 class="box-title">Секции документации</h3>
+                            <div class="box-tools">
+                                <button class="btn btn-primary btn-xs btn-flat" @click="addSection"><i class="fa fa-plus"></i></button>
+                            </div>
+                        </div>
+                        <div class="box-body no-padding">
+                            <table class="table table-striped" style="width:100%;">
+                                <tbody>
+                                <tr v-for="section in sections">
+                                    <td @click="$router.push('/docs/sections/'+section.id);">{{section.name}}</td>
+                                    <td>
+                                        <div class="pull-right">
+                                            <button type="button" class="btn bnt-primary btn-xs btn-flat btn-social btn-bitbucket" ><i class="fa fa-list"></i> Просмотр</button>
+                                            <button type="button" class="btn btn-info btn-xs btn-flat  btn-social"><i class="fa fa-edit"></i> Редактировать</button>
+                                            <button type="button" class="btn btn-danger btn-xs btn-flat  btn-social" @click="remove(section.id)"><i class="fa fa-remove"></i> Удалить</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tbody>
+
+                            </table>
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -30,10 +38,32 @@
 
 <script>
 	export default {
+		data() {
+			return {
+				sections: {},
+                socket: null,
+            }
+        },
+		created() {
+			this.$db.table('docSection').run().then((data) => {
+				console.log('socket data', data);
+				this.sections = data;
+			});
+
+        },
+        beforeDestroy() {
+		    //this.$db.close();
+        },
 		methods: {
-			test() {
-                console.log('test')
-			}
+			addSection() {
+				this.$router.push('/docs/sections/create')
+            },
+
+            remove(id) {
+				console.log('remove id', id);
+				this.$db.table('docSection').get(id).delete().run();
+				this.sections = this.sections.filter((s) => s.id !== id);
+            }
 		},
 	}
 </script>
