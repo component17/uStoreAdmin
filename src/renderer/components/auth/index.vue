@@ -49,8 +49,8 @@
         },
 		data() {
 			return {
-				email: 'mail@k1on.ru',
-                pass: '123456',
+				email: '',
+                pass: '',
                 error: null,
                 loading: false,
 			}

@@ -1,5 +1,5 @@
 import { app, BrowserWindow } from 'electron'
-
+const {appUpdater} = require('./autoupdater');
 /**
  * Set `__static` path to static files in production
  * https://simulatedgreg.gitbooks.io/electron-vue/content/en/using-static-assets.html
@@ -7,6 +7,16 @@ import { app, BrowserWindow } from 'electron'
 if (process.env.NODE_ENV !== 'development') {
   global.__static = require('path').join(__dirname, '/static').replace(/\\/g, '\\\\')
 }
+
+
+if (require('electron-squirrel-startup')) {
+	app.quit();
+}
+
+function isWindowsOrmacOS() {
+	return process.platform === 'darwin' || process.platform === 'win32';
+}
+
 
 let mainWindow
 const winURL = process.env.NODE_ENV === 'development'
@@ -23,7 +33,18 @@ function createWindow () {
     width: 1000
   })
 
-  mainWindow.loadURL(winURL)
+  mainWindow.loadURL(winURL);
+	
+	const page = mainWindow.webContents;
+	
+	page.once('did-frame-finish-load', () => {
+		const checkOS = isWindowsOrmacOS();
+		if (checkOS && !isDev) {
+			// Initate auto-updates on macOs and windows
+			appUpdater();
+		}
+	});
+	
 
   mainWindow.on('closed', () => {
     mainWindow = null
@@ -63,3 +84,4 @@ app.on('ready', () => {
   if (process.env.NODE_ENV === 'production') autoUpdater.checkForUpdates()
 })
  */
+
