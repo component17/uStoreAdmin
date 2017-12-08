@@ -2,7 +2,7 @@
     <div id="auth" >
             <div class="login-box">
                 <div class="login-logo">
-                    <a href="#"><b>uStore</b>admin!!!</a>
+                    <a href="#"><b>uStore</b>admin</a>
                 </div>
                 <!-- /.login-logo -->
                 <div class="login-box-body">
