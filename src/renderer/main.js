@@ -8,7 +8,33 @@ import VueToastr from '@deveodk/vue-toastr'
 import '@deveodk/vue-toastr/dist/@deveodk/vue-toastr.css';
 Vue.use(VueToastr, {
 	defaultPosition: 'toast-top-right'
-})
+});
+
+import fs from 'fs';
+import path from 'path';
+
+/*function walkSync(dir) {
+	return fs.lstatSync(dir).isDirectory()
+		? fs.readdirSync(dir).map(f => walkSync(path.join(dir, f)))
+		: dir;
+}*/
+/*const md5File = require('md5-file');
+const hash = md5File.sync;
+let fileList = walkSync("F:/uStoreAdmin/build/win-unpacked/");
+let md5FileList = {};
+console.log(fileList);
+fileList.forEach((file) => {
+	if(typeof file === "string")
+		md5FileList[path.normalize(file.replace(__dirname, ''))] = hash(path.normalize(file));
+});
+console.log(md5FileList);*/
+//import vfs from 'vinyl-fs';
+
+/*vfs.src("F:/uStoreAdmin/build/win-unpacked/!*")
+	//.pipe(hash)
+	.pipe(function() {
+		console.log(arguments)
+	});*/
 
 const firebase = require('firebase');
 import socket from 'socket.io-client';
@@ -27,6 +53,9 @@ firebase.auth().languageCode = 'ru';
 
 Vue.component('section-title', require('./components/pageparts/section-title.vue').default);
 Vue.component('section-content', require('./components/pageparts/section-content').default);
+Vue.prototype.$ui = {
+	confirm: require('./ui/confirm/index.js').default
+};
 Vue.prototype.$db = DB;
 Vue.prototype.$fb = firebase;
 Vue.prototype.$auth = firebase.auth();

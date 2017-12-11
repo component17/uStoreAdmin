@@ -41,6 +41,18 @@
                         </li>
                     </ul>
                 </li>
+                <li class="treeview" :class="{'menu-open': menuID === 2, active: menuID === 2}" >
+                    <a @click="menuOpen(2);">
+                        <i class="fa fa-rocket"></i> <span>Релизы</span>
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu" :class="{open: menuID === 2}">
+                        <li><a @click="push('/releases/')"><i class="fa fa-circle-o"></i> Загрузить</a></li>
+                        <li><a @click="push('/releases/ftp/')"><i class="fa fa-circle-o"></i> Настроить FTP</a></li>
+                    </ul>
+                </li>
 
             </ul>
         </section>
@@ -63,6 +75,7 @@
         created() {
             new Promise((resolve, reject) => {
                 this.$db.table("docSection").changes((sections) => {
+                	console.log(sections);
                     sections.forEach((section, sIndex) => {
                         this.$db.table("docCategory").filter({parentId: section.id}).changes((categories) => {
                             sections[sIndex].categories = categories;
@@ -77,6 +90,7 @@
                 })
 
             }).then((sections) => {
+            	console.log(sections);
                 this.sections = sections;
             });
         },

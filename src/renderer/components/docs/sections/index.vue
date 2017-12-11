@@ -13,13 +13,13 @@
                         <div class="box-body no-padding">
                             <table class="table table-striped" style="width:100%;">
                                 <tbody>
-                                <tr v-for="section in sections">
+                                <tr v-for="section in sections" :id="'section__'+section.id">
                                     <td @click="$router.push('/docs/sections/'+section.id);">{{section.name}}</td>
                                     <td>
                                         <div class="pull-right">
                                             <button type="button" class="btn bnt-primary btn-xs btn-flat btn-social btn-bitbucket" ><i class="fa fa-list"></i> Просмотр</button>
                                             <button type="button" class="btn btn-info btn-xs btn-flat  btn-social"><i class="fa fa-edit"></i> Редактировать</button>
-                                            <button type="button" class="btn btn-danger btn-xs btn-flat  btn-social" @click="remove(section.id)"><i class="fa fa-remove"></i> Удалить</button>
+                                            <button type="button" class="btn btn-danger btn-xs btn-flat  btn-social" @click="remove(section)"><i class="fa fa-remove"></i> Удалить</button>
                                         </div>
                                     </td>
                                 </tr>
@@ -44,6 +44,9 @@
                 socket: null,
             }
         },
+        mounted() {
+
+        },
 		created() {
 			this.$db.table('docSection').run().then((data) => {
 				console.log('socket data', data);
@@ -59,10 +62,32 @@
 				this.$router.push('/docs/sections/create')
             },
 
-            remove(id) {
-				console.log('remove id', id);
-				this.$db.table('docSection').get(id).delete().run();
-				this.sections = this.sections.filter((s) => s.id !== id);
+            remove(section, $event) {
+				this.$ui.confirm({
+                    title: "УДАЛЕНИЕ СЕКЦИИ",
+                    body: `Вы удаляете секцию <b>${section.name}</b> ! Для продолжения нажмите "Удалить". Секция будет удалена <b>навсегда</b>`,
+                    ok:"Удалить навсегда",
+
+                }).then(() => {
+					//this.$db.table('docSection').get(id).delete().run();
+
+                    new Promise((resolve, reject) => {
+                    	let el = document.querySelector('#section__'+section.id);
+                    	for(let i = 0; i <= 6; i++) {
+                    		setTimeout(() => {
+                    			if(i > 5) {
+                    				resolve();
+                                } else {
+                    				el.classList.toggle('remove');
+                                }
+                            }, i * 200);
+                        }
+                    }).then(() => {
+	                    this.sections = this.sections.filter((s) => s.id !== section.id);
+                    })
+                }).catch(() => {
+                });
+
             }
 		},
 	}
@@ -74,6 +99,14 @@
     }
     tr > td:first-child {
         cursor: pointer;
+    }
+
+    tr td {
+        transition-duration: 150ms;
+    }
+    tr.remove td {
+        background: #ED4337;
+        transition-duration: 150ms;
     }
 
 </style>

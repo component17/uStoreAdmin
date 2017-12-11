@@ -18,6 +18,8 @@ export default new Router({
       {path: '/docs/pages/add/:category', component: require('@/components/docs/pages/add/').default, name: 'docs-pages-add',meta: {auth:true}},
       {path: '/docs/pages/edit/:id', component: require('@/components/docs/pages/add/').default, name: 'docs-pages-edit',meta: {auth:true}},
       {path: '/docs/category/add/:section', component: require('@/components/docs/category/add/').default, name: 'docs-category-add',meta: {auth:true}},
+      {path: '/releases/', component: require('@/components/release').default, name: 'release',meta: {auth:true}},
+      {path: '/releases/ftp/', component: require('@/components/release/ftp').default, name: 'release-ftp',meta: {auth:true}},
 /*      {path: '/docs/read/', component: require('@/components/docs/read/').default, name: 'docs-read', meta: {auth: true}},
       {path: '/docs/read/:section', component: require('@/components/docs/read/section').default, name: 'docs-read-section', meta: {auth: true}},
       {path: '/docs/read/:section/:category', component: require('@/components/docs/read/category').default, name: 'docs-read-category', meta: {auth: true}},*/

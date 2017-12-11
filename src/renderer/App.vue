@@ -15,6 +15,7 @@
       },
 
       mounted() {
+      	//alert('auto updated!!!');
       /*	let r  = this.$db.r();
         setTimeout(() => {
 	        this.$db.table('test').merge((name) => {

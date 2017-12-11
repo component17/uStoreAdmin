@@ -1,6 +1,7 @@
 'use strict'
 
 process.env.BABEL_ENV = 'renderer'
+const JavaScriptObfuscator = require('webpack-obfuscator');
 
 const path = require('path')
 const { dependencies } = require('../package.json')

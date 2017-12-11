@@ -17,7 +17,7 @@
                                     <div class="pull-right">
                                         <button type="button" class="btn bnt-primary btn-xs btn-flat btn-social btn-bitbucket" ><i class="fa fa-list"></i> Просмотр</button>
                                         <button type="button" class="btn btn-info btn-xs btn-flat  btn-social"><i class="fa fa-edit"></i> Редактировать</button>
-                                        <button type="button" class="btn btn-danger btn-xs btn-flat  btn-social" @click="remove(category.id)"><i class="fa fa-remove"></i> Удалить</button>
+                                        <button type="button" class="btn btn-danger btn-xs btn-flat  btn-social" @click="remove(category)"><i class="fa fa-remove"></i> Удалить</button>
                                     </div>
                                 </td>
                             </tr>
@@ -57,7 +57,15 @@
             },
 
             remove(id) {
-        		console.log(id);
+        		this.$ui.confirm({
+                    title: "Удаление категории",
+                    body: `Вы удаляете категорию <b>${id.name}</b>! Для продолжения нажмите "Удалить". Категория будет удалена <b>навсегда</b>`,
+                    ok: "Удалить навсегда"
+                }).then(() => {
+
+                }).catch(() => {
+
+                })
             }
         }
 	}
