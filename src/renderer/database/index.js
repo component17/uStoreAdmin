@@ -54,11 +54,9 @@ class DB {
 	send_socket(query, callback) {
 		let firebase = Vue.prototype.$fb;
 		
-		console.log('send_socket');
 		firebase.auth().currentUser.getIdToken(/* forceRefresh */ false).then((token)  => {
-			console.log('token')
 			let uid = this.uid();
-			let socket = new Vue.prototype.$socket('http://localhost:8088');
+			let socket = new Vue.prototype.$socket('http://api.upoint.store:8088');
 			this.socket_list.push(socket);
 			socket.connect();
 			socket.on('connect', () => {
@@ -131,7 +129,7 @@ class DB {
 	
 	createHTTP() {
 		this.http = Vue.prototype.$http.create({
-			baseURL: 'http://localhost:8088/',
+			baseURL: 'http://api.upoint.store:8088/',
 			timeout: 10000,
 			withCredentials: true,
 			//transformRequest: [(data) => JSON.stringify(data.data)],

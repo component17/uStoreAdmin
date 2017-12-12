@@ -85,8 +85,7 @@
                     }).then(() => {
 	                    this.sections = this.sections.filter((s) => s.id !== section.id);
                     })
-                }).catch(() => {
-                });
+                }).catch(() => {});
 
             }
 		},

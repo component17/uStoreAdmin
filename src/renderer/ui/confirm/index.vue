@@ -42,11 +42,11 @@
 
         mounted() {
     	    this.$nextTick(() => {
-		        document.querySelector('.ui__confirm').addEventListener('click', this.backgroundClick);
+		       // document.querySelector('.ui__confirm').addEventListener('click', this.backgroundClick);
             })
         },
         beforeDestroy() {
-	        document.querySelector('.ui__confirm').removeEventListener('click', this.backgroundClick);
+	        //document.querySelector('.ui__confirm').removeEventListener('click', this.backgroundClick);
 
         }   ,
 
